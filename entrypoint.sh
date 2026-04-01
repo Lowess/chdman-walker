@@ -4,9 +4,12 @@ set -e
 INPUT_DIR="${INPUT_DIR:-/input}"
 CHDMAN_MODE="${CHDMAN_MODE:-createcd}"
 
+CHDMAN_VERSION=$(chdman 2>&1 | head -1 || true)
+
 echo "======================================="
 echo " CHDMan Walker"
 echo "======================================="
+echo "Version   : $CHDMAN_VERSION"
 echo "Mode      : $CHDMAN_MODE"
 echo "Directory : $INPUT_DIR"
 echo "======================================="
@@ -45,10 +48,8 @@ extract_from_chd() {
 case "$CHDMAN_MODE" in
     createcd)
         echo "Scanning for GDI, CUE and ISO files..."
-        count=0
         find "$INPUT_DIR" -type f \( -iname "*.gdi" -o -iname "*.cue" -o -iname "*.iso" \) | sort | while read -r f; do
             convert_to_chd "$f" createcd
-            count=$((count + 1))
         done
         ;;
     createdvd)
