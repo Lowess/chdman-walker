@@ -1,6 +1,8 @@
-FROM alpine:3.21
+FROM alpine:edge
 
-RUN apk add --no-cache mame-tools
+RUN apk add --no-cache \
+    --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    mame-tools
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
